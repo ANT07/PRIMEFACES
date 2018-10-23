@@ -14,7 +14,7 @@ import org.primefaces.push.impl.JSONEncoder;
  *
  * @author ANTHONY MARTINEZ
  */
-@PushEndpoint("/notity")
+@PushEndpoint("/notify")
 public class NotifyResource {
     
       @OnMessage(encoders = {JSONEncoder.class})

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:growl id="msj" widgetVar="wmsj" showDetail="true" showSummary="true"/>
+        <p:socket onMessage="handleMessage" channel="/notify">
+            <p:ajax event="message" update=":frm:dtPersonas"/>
+        </p:socket>
+        <script>
+            function handleMessage(facesMessage){
+                facesMessage.severity = 'info';
+                PF("wmsj").show([facesMessage]);
+            }
+        </script>
+        <h:form id="frm">
+            <p:dataTable id="dtPersonas" value="#{personaBean.personas}" var="p"
+                         rows="10"
+                         paginator="true"
+                         rowsPerPageTemplate="5,10,15">
+                <p:column headerText="Nombre" filterBy="#{p.nombre}" filterMatchMode="exact">
+                    <p:outputLabel value="#{p.nombre}"/>
+                </p:column>
+                <p:column headerText="Edad" filterBy="#{p.edad}" filterMatchMode="exact" >
+                    <p:outputLabel value="#{p.nombre}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

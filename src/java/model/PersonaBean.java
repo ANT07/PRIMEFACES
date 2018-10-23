@@ -6,10 +6,14 @@
 package model;
 
 import bean.Persona;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import org.primefaces.push.EventBus;
+import org.primefaces.push.EventBusFactory;
 
 /**
  *
@@ -33,6 +37,19 @@ public class PersonaBean {
         PersonaBean.personas = personas;
     }
     
+    public void agregar(ActionEvent e){
+        personas.add(persona);
+        this.notificarPush();
+    }
+    
+    public void notificarPush(){
+        String summary = "Nuevo elemento";
+        String detail = "Se agrego otro elemento";
+        String channel = "/notify";
+        
+        EventBus eventBus = EventBusFactory.getDefault().eventBus();
+        eventBus.publish(channel, new FacesMessage(summary, detail));
+    }
     public void listar(){
         Persona persona = new Persona();
         persona.setNombre("Anthony");
